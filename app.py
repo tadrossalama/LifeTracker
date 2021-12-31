@@ -2,31 +2,36 @@ import streamlit as st
 from streamlit import delta_generator
 from streamlit.elements import text
 from LifeTracker import *
-from notionviz import *
 from statistics import mean
-import plotly.express as px
 import plotly.graph_objects as go
+
+st.set_page_config(layout="wide")
+
+st.title("Life Tracker")
+user_dataId=st.text_input("Enter your dataId:")
+
+user_integration_token=st.text_input("Enter your integration token:")
+integration_token = user_integration_token
+DATABASEID = user_dataId
+
+
+
+if user_integration_token == None:
+    pass
+else:
+    #from LifeTracker import NotionSync
+    def load_data():
+        nsync = NotionSync()
+        data = nsync.query_databases(user_integration_token,user_dataId)
+        projects = nsync.get_projects_titles(data)
+        projects_data,dates = nsync.get_projects_data(data,projects)
+        df = setupProjectsDf(projects_data,dates)
+        return df
+    df = load_data()
 
 
 def main():
-    
-    st.title("Life Tracker")
-    user_dataId=st.text_input("Enter your dataId:")
-    user_integration_token=st.text_input("Enter your integration token:")
-
-    if user_integration_token == "":
-        pass
-    else:
-        def load_data():
-            nsync = NotionSync()
-            DATABASE_ID=user_dataId
-            data = nsync.query_databases(integration_token=user_integration_token)
-            projects = nsync.get_projects_titles(data)
-            projects_data,dates = nsync.get_projects_data(data,projects)
-            df = setupProjectsDf(projects_data,dates)
-            return df
-        df = load_data()
-
+ 
 
         df['Ticker'] = df.sum(axis=1) 
         df['Ticker'] = df['Ticker']+(1.01**df.index)
@@ -99,7 +104,6 @@ def main():
             gauge = {'axis': {'range': [0, 5]}},
         ))
         st.plotly_chart(fig2)
-
 
 
 main()
