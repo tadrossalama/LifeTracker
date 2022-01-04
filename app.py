@@ -33,7 +33,7 @@ if len(integration_token and user_dataId):
     st.dataframe(df.tail())
    
     st.header("Ticker")
-    image = Image.open("image.png") 
+    
 
     with st.expander("See how your ticker is calculated:"):
         st.latex("\displaystyle\sum_{i=1}^5x_i +k^n = (x_1 + x_2 + x_3 + x_4) + 1.01^{n})")
