@@ -11,10 +11,11 @@ import pandas as pd
 from PIL import Image
 
 
+st.set_page_config(layout="wide")
 st.title("Life Tracker")
 st.caption("Enter your notion api info up there to get started!")
-user_dataId=st.sidebar.text_input("Enter your DataBaseID:").strip('"')
 
+user_dataId=st.sidebar.text_input("Enter your DataBaseID:").strip('"')
 integration_token=st.sidebar.text_input("Enter your integration token:").strip('"')
 
 
@@ -43,16 +44,11 @@ if len(integration_token and user_dataId):
             * $n$: the number of days you have tracked
             """)
         
-    
-    
-
-
     row1_col1, row1_col2 = st.columns(2)
     row1_col1.plotly_chart(ticker_plot(df))
     row1_col2.plotly_chart(metric_plot(df))
 
-    #metrics_plot = px.line(x=df['Date'], color='projects', template="plotly_dark")
-    #st.plotly_chart(metrics_plot)
+#Metrics
     st.header("Average Metric Scores:")
     col1, col2, col3, col4 = st.columns(4)
     col1.metric(label="Satisfaction", value=round(mean(df["Satisfaction"]), 2), delta= metric_calc(df["Satisfaction"]))
@@ -60,7 +56,7 @@ if len(integration_token and user_dataId):
     col3.metric(label="Professional Development", value=round(mean(df["Professional Development"])), delta= metric_calc(df["Professional Development"]))
     col4.metric(label="Health", value=round(mean(df["Health"]), 2), delta= metric_calc(df["Health"]))
 
-
+#indicator gauge might remove
     fig2 = go.Figure(go.Indicator(
         mode = "gauge+number+delta",
         delta = {'reference': mean(df["Satisfaction"])-metric_calc(df["Satisfaction"])},
