@@ -37,17 +37,18 @@ if len(integration_token and user_dataId):
     
 
     with st.expander("See how your ticker is calculated:"):
-        st.latex("\displaystyle\sum_{i=1}^5x_i +k^n = (x_1 + x_2 + x_3 + x_4) + 1.01^{n})")
+        st.latex("\displaystyle\sum_{i=1}^5x_i *k^n = (x_1 + x_2 + x_3 + x_4) * 1.01^{n})")
         st.markdown("""
             * $$x1, x2, x3, x4, x5$$: metrics, rated from 0 to 5.           
             * $k$: constant, $1.01$ is the growth rate
             * $n$: the number of days you have tracked
             """)
         
-    row1_col1, row1_col2 = st.columns(2)
+    row1_col1,row1_col2 = st.columns(2)
     row1_col1.plotly_chart(ticker_plot(df))
     row1_col2.plotly_chart(metric_plot(df))
 
+    st.markdown("---")
 #Metrics
     st.header("Average Metric Scores:")
     col1, col2, col3, col4 = st.columns(4)
@@ -57,17 +58,12 @@ if len(integration_token and user_dataId):
     col4.metric(label="Health", value=round(mean(df["Health"]), 2), delta= metric_calc(df["Health"]))
 
 #indicator gauge might remove
-    fig2 = go.Figure(go.Indicator(
-        mode = "gauge+number+delta",
-        delta = {'reference': mean(df["Satisfaction"])-metric_calc(df["Satisfaction"])},
-        value = mean(df["Satisfaction"]),
-        title = {'text': "Satisifaction"},
-        domain = {'x': [0, 0.5], 'y': [0, 0.5]},
-        gauge = {'axis': {'range': [0, 5]}},
-    ))
-    st.plotly_chart(fig2)
-
-
+    st.header("Indicator Gauge")
+    col1, col2, col3, col4 = st.columns(4)
+    col1.plotly_chart(metric_dash(df['Satisfaction']))
+    col2.plotly_chart(metric_dash(df['Personal Development']))
+    col3.plotly_chart(metric_dash(df['Professional Development']))
+    col4.plotly_chart(metric_dash(df['Health']))
 
 else:
     pass

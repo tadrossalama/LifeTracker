@@ -1,5 +1,6 @@
 
 from PIL.Image import NONE
+from plotly import plot
 import streamlit as st
 from streamlit import delta_generator
 from streamlit.elements import text
@@ -17,7 +18,6 @@ def setupProjectsDf(projects_data,dates):
     df['Ticker'] = round(df.mean(axis=1) * (1.01**df.index),2)
     
     return df
-
 
 def ticker_plot(df):
     ticker_plot = px.line(x=df['Date'], y=df['Ticker'], 
@@ -41,12 +41,11 @@ def ticker_plot(df):
             ))
     return ticker_plot
 
-def metric_calc(x):
-    daily_score = x.mean()- x[:-1].mean()
-    return round(daily_score,2)
+
+metric_calc = lambda x: round(mean(x)-x[:-1].mean(),2)
+
 
 def metric_plot(df):
-
     metric_plot = px.area(df, x=df['Date'], y=df.columns[:-1],template="plotly_dark")        
     metric_plot.update_layout(font_family="Courier New",title={ 
             'text': "Metrics",  
@@ -55,6 +54,20 @@ def metric_plot(df):
             'xanchor': 'center', 
             'yanchor': 'top'
             })
+    metric_plot.update_traces(mode='markers+lines')
     return metric_plot
+
+
+def metric_dash(x):
+    plot = go.Figure(go.Indicator(
+        value = mean(x),
+        mode = "gauge+number+delta",
+        delta = {'reference': mean(x)-metric_calc(x)},
+        title = {'text': f'{x.name}'},
+        domain = {'x': [0, 0.4], 'y': [0, 0.4]},
+        gauge = {'axis': {'range': [0, 5]}},
+    ))
+    return plot
+
 
 
