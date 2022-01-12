@@ -11,7 +11,7 @@ import pandas as pd
 
 
 st.set_page_config(layout="wide")
-st.title("Life Tracker")
+st.title("Life Tracker 🏗️ ")
 st.caption("Enter your notion api info up there to get started!")
 
 user_dataId=st.sidebar.text_input("Enter your DataBaseID:").strip('"')
