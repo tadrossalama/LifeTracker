@@ -31,11 +31,9 @@ if len(integration_token and user_dataId):
    
     
     st.dataframe(df.tail())
-    
    
     st.header("Ticker")
     
-
     with st.expander("See how your ticker is calculated:"):
         st.latex("\displaystyle\sum_{i=1}^5x_i *k^n = (x_1 + x_2 + x_3 + x_4) * 1.01^{n})")
         st.markdown("""
@@ -49,16 +47,7 @@ if len(integration_token and user_dataId):
     row1_col2.plotly_chart(metric_plot(df))
 
     st.markdown("---")
-#Metrics
-    st.header("Average Metric Scores:")
-    col1, col2, col3, col4 = st.columns(4)
-    col1.metric(label="Satisfaction", value=round(mean(df["Satisfaction"]), 2), delta= metric_calc(df["Satisfaction"]))
-    col2.metric(label="Personal Development", value=round(mean(df["Personal Development"])), delta= metric_calc(df["Personal Development"]))
-    col3.metric(label="Professional Development", value=round(mean(df["Professional Development"])), delta= metric_calc(df["Professional Development"]))
-    col4.metric(label="Health", value=round(mean(df["Health"]), 2), delta= metric_calc(df["Health"]))
 
-#indicator gauge might remove
-    st.header("Indicator Gauge")
     col1, col2, col3, col4 = st.columns(4)
     col1.plotly_chart(metric_dash(df['Satisfaction']))
     col2.plotly_chart(metric_dash(df['Personal Development']))
