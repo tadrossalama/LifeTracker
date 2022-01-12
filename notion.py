@@ -22,28 +22,30 @@ class NotionSync:
         else:
             return response.json()
     
-    def get_projects_titles(self,data_json):
+    def get_metrics_titles(self,data_json):
         return list(data_json["results"][0]["properties"].keys())
     
 
-    def get_projects_data(self,data_json,projects):
-        projects_data = {}
-        for p in projects:
+    def get_metrics_data(self,data_json,metrics):
+        metrics_data = {}
+        for p in metrics:
+            
             if p!="Name" and p !="Date":
-                projects_data[p] = [data_json["results"][i]["properties"][p]["number"]
-                                    for i in range(len(data_json["results"]))]
+                metrics_data[p] = [data_json["results"][i]["properties"][p]["number"]
+                                    for i in range(len(data_json["results"]))if data_json["results"][i]["properties"][p]['number'] != None]
             elif p=="Date":
-                dates = [data_json["results"][i]["properties"]["Date"]["date"]["start"]
-                                    for i in range(len(data_json["results"]))]
+                metrics_data[p] = [data_json["results"][i]["properties"]["Date"]["date"]["start"]
+                                    for i in range(len(data_json["results"])) if data_json["results"][i]["properties"][p]['date'] != None]
 
         
-        return projects_data,dates
-
+        return metrics_data
 
 if __name__=='__main__':
     nsync = NotionSync()
     data = nsync.query_databases()
-    projects = nsync.get_projects_titles(data)
-    projects_data,dates = nsync.get_projects_data(data,projects)
-    df = setupProjectsDf(projects_data,dates)
+    projects = nsync.get_metrics_titles(data)
+    projects_data,dates = nsync.get_metrics_data(data,metrics)
+    df = setupProjectsDf(metrics_data,dates)
+
+
 

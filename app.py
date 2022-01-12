@@ -8,7 +8,8 @@ from statistics import mean
 import plotly.graph_objects as go
 from modulefinder import ModuleFinder
 import pandas as pd
-from PIL import Image
+from st_aggrid import AgGrid
+from st_aggrid.grid_options_builder import GridOptionsBuilder
 
 
 st.set_page_config(layout="wide")
@@ -23,15 +24,16 @@ if len(integration_token and user_dataId):
     def load_data():
         nsync = NotionSync()
         data = nsync.query_databases(integration_token,user_dataId)
-        projects = nsync.get_projects_titles(data)
-        projects_data,dates = nsync.get_projects_data(data,projects)
-        df = setupProjectsDf(projects_data,dates)
+        metrics = nsync.get_metrics_titles(data)
+        metrics_data = nsync.get_metrics_data(data,metrics)
+        df = setupProjectsDf(metrics_data)
         return df
 
     df = load_data()
    
     
     st.dataframe(df.tail())
+    
    
     st.header("Ticker")
     

@@ -8,10 +8,8 @@ from notion import *
 from statistics import mean
 import plotly.graph_objects as go
 
-def setupProjectsDf(projects_data,dates):
-    df = pd.DataFrame(projects_data)
-    df["Date"] = dates
-    df["Date"] =pd.to_datetime(df["Date"])
+def setupProjectsDf(metrics_data):
+    df = pd.DataFrame(metrics_data)
     df = df.set_index("Date")
     df = df.sort_index()
     df= df.reset_index(inplace=False)
@@ -64,7 +62,7 @@ def metric_dash(x):
         mode = "gauge+number+delta",
         delta = {'reference': mean(x)-metric_calc(x)},
         title = {'text': f'{x.name}'},
-        domain = {'x': [0, 0.4], 'y': [0, 0.4]},
+        domain = {'x': [0, 0.37], 'y': [0, 0.37]},
         gauge = {'axis': {'range': [0, 5]}},
     ))
     return plot
