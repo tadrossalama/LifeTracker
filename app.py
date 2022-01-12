@@ -8,8 +8,6 @@ from statistics import mean
 import plotly.graph_objects as go
 from modulefinder import ModuleFinder
 import pandas as pd
-from st_aggrid import AgGrid
-from st_aggrid.grid_options_builder import GridOptionsBuilder
 
 
 st.set_page_config(layout="wide")
