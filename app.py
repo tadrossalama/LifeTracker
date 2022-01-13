@@ -14,8 +14,8 @@ st.set_page_config(layout="wide")
 st.title(" 🏗️ Life Tracker")
 st.caption("Enter your notion api info up there to get started!")
 
-user_dataId=st.sidebar.text_input("Enter your DataBaseID:").strip('"')
-integration_token=st.sidebar.text_input("Enter your integration token:").strip('"')
+user_dataId=st.sidebar.text_input("Database ID:").strip('"')
+integration_token=st.sidebar.text_input("Integration Token:").strip('"')
 
 
 if len(integration_token and user_dataId):
@@ -47,7 +47,8 @@ if len(integration_token and user_dataId):
     row1_col2.plotly_chart(metric_plot(df))
 
     st.markdown("---")
-
+    
+    st.header("Average Metric Scores")
     col1, col2, col3, col4 = st.columns(4)
     col1.plotly_chart(metric_dash(df['Satisfaction']))
     col2.plotly_chart(metric_dash(df['Personal Development']))
