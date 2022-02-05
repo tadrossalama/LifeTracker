@@ -23,7 +23,7 @@ def ticker_plot(df):
     ticker_plot.update_traces(mode='markers+lines')
     ticker_plot.update_layout(
         font_family="Courier New",title={ 
-            'text': "Ticker: :)TDOT",  
+            'text': "Ticker",  
             'y': 0.95,
             'x': 0.5, 
             'xanchor': 'center', 
@@ -37,6 +37,7 @@ def ticker_plot(df):
                 font_size=12,
                 font_family="Courier New",
             ))
+    
     return ticker_plot
 
 

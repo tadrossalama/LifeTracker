@@ -28,7 +28,6 @@ if len(integration_token and user_dataId):
         return df
 
     df = load_data()
-   
     
     st.dataframe(df.tail())
    
@@ -49,11 +48,12 @@ if len(integration_token and user_dataId):
     st.markdown("---")
     
     st.header("Average Metric Scores")
-    col1, col2, col3, col4 = st.columns(4)
-    col1.plotly_chart(metric_dash(df['Satisfaction']))
-    col2.plotly_chart(metric_dash(df['Personal Development']))
-    col3.plotly_chart(metric_dash(df['Professional Development']))
-    col4.plotly_chart(metric_dash(df['Health']))
+    col1, col2, col3, col4, col5 = st.columns(5)
+    col1.plotly_chart(metric_dash(df.iloc[:, 1]))
+    col2.plotly_chart(metric_dash(df.iloc[:, 2]))
+    col3.plotly_chart(metric_dash(df.iloc[:, 3]))
+    col4.plotly_chart(metric_dash(df.iloc[:, 4]))
+    col5.plotly_chart(metric_dash(df.iloc[:, 5]))
 
 else:
     pass

@@ -30,7 +30,7 @@ class NotionSync:
         metrics_data = {}
         for p in metrics:
             
-            if p!="Name" and p !="Date":
+            if p!="notes" and p !="Date":
                 metrics_data[p] = [data_json["results"][i]["properties"][p]["number"]
                                     for i in range(len(data_json["results"]))if data_json["results"][i]["properties"][p]['number'] != None]
             elif p=="Date":
