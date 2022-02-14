@@ -34,7 +34,7 @@ if len(integration_token and user_dataId):
     st.header("Ticker")
     
     with st.expander("See how your ticker is calculated:"):
-        st.latex("\displaystyle\sum_{i=1}^5x_i *k^n = (x_1 + x_2 + x_3 + x_4) * 1.01^{n})")
+        st.latex("(x_1 + x_2 + x_3 + x_4) * 1.01^{n})")
         st.markdown("""
             * $$x1, x2, x3, x4, x5$$: metrics, rated from 0 to 5.           
             * $k$: constant, $1.01$ is the growth rate
