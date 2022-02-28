@@ -26,11 +26,14 @@ if len(integration_token and user_dataId):
         metrics_data = nsync.get_metrics_data(data,metrics)
         df = setupProjectsDf(metrics_data)
         return df
+    
+    df = load_data()
 
     with st.expander("History"):
-        df = load_data()
+        st.dataframe(df.tail())
+        
     
-    st.dataframe(df.tail())
+    
    
     st.header("Ticker")
     
