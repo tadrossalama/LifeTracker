@@ -27,7 +27,7 @@ if len(integration_token and user_dataId):
         df = setupProjectsDf(metrics_data)
         return df
 
-    with st.expander("History")
+    with st.expander("History"):
         df = load_data()
     
     st.dataframe(df.tail())
