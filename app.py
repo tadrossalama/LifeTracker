@@ -17,7 +17,6 @@ st.caption("Enter your notion api info up there to get started!")
 user_dataId=st.sidebar.text_input("Database ID:").strip('"')
 integration_token=st.sidebar.text_input("Integration Token:").strip('"')
 
-
 if len(integration_token and user_dataId):
     def load_data():
         nsync = NotionSync()
@@ -26,15 +25,11 @@ if len(integration_token and user_dataId):
         metrics_data = nsync.get_metrics_data(data,metrics)
         df = setupProjectsDf(metrics_data)
         return df
-    
     df = load_data()
 
     with st.expander("History"):
         st.dataframe(df.tail())
-        
-    
-    
-   
+
     st.header("Ticker")
     
     with st.expander("See how your ticker is calculated:"):
